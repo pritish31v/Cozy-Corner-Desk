@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cozy Corner Desk // Lo-Fi Sanctuary</title>
+  
+  <!-- Fonts: Playfair Display for warm literary serif & Plus Jakarta Sans for clean legibility -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    :root {
+      --bg-primary: #1e1714;
+      --desk-wood: #2a1f1a;
+      --desk-surface: #3b2b23;
+      --desk-grain: rgba(220, 180, 150, 0.04);
+      --accent-warm: #e29555;
+      --accent-glow: rgba(240, 160, 90, 0.28);
+      --cream-text: #f7ede2;
+      --cream-dim: #c5b5a7;
+      --card-bg: rgba(36, 26, 22, 0.78);
+      --card-border: rgba(247, 237, 226, 0.08);
+      --lamp-glow-opacity: 0.65;
+    }
+
+    /* Mood theme palettes dynamically adjusted via data-mood on body */
+    body[data-mood="honey"] {
+      --accent-warm: #f4a261;
+      --accent-glow: rgba(244, 162, 97, 0.35);
+      --bg-gradient: radial-gradient(circle at 20% 15%, #472c1b 0%, #1a120e 100%);
+    }
+    body[data-mood="slate"] {
+      --accent-warm: #84a98c;
+      --accent-glow: rgba(132, 169, 140, 0.28);
+      --bg-gradient: radial-gradient(circle at 20% 15%, #253338 0%, #0f1517 100%);
+    }
+    body[data-mood="mocha"] {
+      --accent-warm: #d4a373;
+      --accent-glow: rgba(212, 163, 115, 0.32);
+      --bg-gradient: radial-gradient(circle at 20% 15%, #3d2319 0%, #150b07 100%);
+    }
+    body[data-mood="moss"] {
+      --accent-warm: #90be6d;
+      --accent-glow: rgba(144, 190, 109, 0.3);
+      --bg-gradient: radial-gradient(circle at 20% 15%, #223824 0%, #0c140d 100%);
+    }
+    body[data-mood="lavender"] {
+      --accent-warm: #b5838d;
+      --accent-glow: rgba(181, 131, 141, 0.35);
+      --bg-gradient: radial-gradient(circle at 20% 15%, #352136 0%, #120b13 100%);
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-gradient, radial-gradient(circle at 20% 15%, #402719 0%, #150d0a 100%));
+      color: var(--cream-text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      transition: background 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .font-serif-cozy {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* Desk surface styling */
+    .desk-mat {
+      background: linear-gradient(180deg, rgba(46, 32, 26, 0.75) 0%, rgba(29, 20, 16, 0.95) 100%);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 240, 220, 0.1);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+    }
+
+    /* Ambient Desk Lamp Light Cone Effect */
+    .lamp-cone {
+      position: absolute;
+      top: -20px;
+      left: 10%;
+      width: 480px;
+      height: 520px;
+      background: radial-gradient(ellipse at top, rgba(255, 224, 168, var(--lamp-glow-opacity)) 0%, rgba(255, 205, 130, calc(var(--lamp-glow-opacity) * 0.4)) 40%, transparent 75%);
+      pointer-events: none;
+      filter: blur(40px);
+      transition: opacity 0.5s ease-in-out, transform 0.5s ease;
+      z-index: 1;
+    }
+    .lamp-cone.off {
+      opacity: 0.05 !important;
+    }
+
+    /* Realistic Coffee Steam Animation */
+    @keyframes riseSteam1 {
+      0% { transform: translateY(0) scaleX(1) scaleY(1); opacity: 0; }
+      20% { opacity: 0.7; }
+      50% { transform: translateY(-24px) scaleX(1.4) scaleY(1.2) translateX(4px); opacity: 0.4; }
+      80% { opacity: 0.2; }
+      100% { transform: translateY(-48px) scaleX(1.8) scaleY(1.5) translateX(-6px); opacity: 0; }
+    }
+    @keyframes riseSteam2 {
+      0% { transform: translateY(0) scaleX(1); opacity: 0; }
+      25% { opacity: 0.8; }
+      60% { transform: translateY(-30px) scaleX(1.3) translateX(-5px); opacity: 0.35; }
+      100% { transform: translateY(-56px) scaleX(2) translateX(8px); opacity: 0; }
+    }
+    @keyframes riseSteam3 {
+      0% { transform: translateY(0) scaleX(0.8); opacity: 0; }
+      30% { opacity: 0.6; }
+      70% { transform: translateY(-26px) scaleX(1.5) translateX(3px); opacity: 0.25; }
+      100% { transform: translateY(-50px) scaleX(2.2) translateX(-4px); opacity: 0; }
+    }
+
+    .steam-line-1 { animation: riseSteam1 3.2s ease-in-out infinite; }
+    .steam-line-2 { animation: riseSteam2 3.8s ease-in-out 0.9s infinite; }
+    .steam-line-3 { animation: riseSteam3 4.2s ease-in-out 1.7s infinite; }
+
+    /* Custom range sliders */
+    input[type=range] {
+      -webkit-appearance: none;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+      height: 5px;
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent-warm);
+      cursor: pointer;
+      box-shadow: 0 0 8px var(--accent-glow);
+      transition: transform 0.1s ease;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform: scale(1.25);
+    }
+
+    /* Subtle custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(247, 237, 226, 0.15);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(247, 237, 226, 0.3);
+    }
+  </style>
+</head>
+<body data-mood="honey" class="p-3 sm:p-6 lg:p-8 flex flex-col justify-between relative selection:bg-amber-800 selection:text-white">
+
+  <!-- Dynamic Lamp Light Spill Overlay -->
+  <div id="lampCone" class="lamp-cone"></div>
+
+  <!-- Header & Atmosphere Status Bar -->
+  <header class="w-full max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-white/5 relative z-10">
+    <div class="flex items-center gap-3">
+      <!-- Interactive Lamp Button -->
+      <button id="btnLamp" class="p-2.5 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 transition-all transform active:scale-95 group relative" title="Toggle Desk Lamp Warmth">
+        <svg id="lampIcon" class="w-5 h-5 text-amber-300 transition-colors" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2a6 6 0 0 0-6 6v3.2a2 2 0 0 0-.8 1.6v2a2 2 0 0 0 2 2h9.6a2 2 0 0 0 2-2v-2a2 2 0 0 0-.8-1.6V8a6 6 0 0 0-6-6zm0 18a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+        </svg>
+        <span class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black/80 text-[10px] px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Desk Lamp</span>
+      </button>
+
+      <div>
+        <h1 class="text-xl sm:text-2xl font-serif-cozy font-bold tracking-tight text-[#f7ede2] flex items-center gap-2">
+          Cozy Corner Desk
+          <span class="text-xs font-sans font-normal tracking-wide px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-amber-200/80">Lo-Fi Haven</span>
+        </h1>
+        <p class="text-xs text-[#c5b5a7] mt-0.5">Pour a cup of focus. Take your time.</p>
+      </div>
+    </div>
+
+    <!-- Live Ambient Status & Master Audio Toggle -->
+    <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+      <!-- Audio Permission Indicator -->
+      <button id="btnAudioMaster" class="px-3.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-medium flex items-center gap-2 transition active:scale-95 text-[#f7ede2]">
+        <span id="audioStatusDot" class="w-2 h-2 rounded-full bg-stone-500"></span>
+        <span id="audioMasterLabel">Soundboard: Sleeping</span>
+      </button>
+
+      <div class="text-right pl-3 border-l border-white/10 hidden md:block">
+        <div id="liveTime" class="text-sm font-semibold tracking-wide text-[#f7ede2]">00:00</div>
+        <div id="liveDate" class="text-[10px] text-[#c5b5a7] uppercase tracking-wider">Café Sanctum</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Desk Experience Grid -->
+  <main class="w-full max-w-7xl mx-auto my-6 grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10 flex-1 items-start">
+
+    <!-- LEFT COLUMN: The Interactive Desk (Pomodoro Coffee Mug + Rainy Window) [5 COLS] -->
+    <section class="lg:col-span-5 flex flex-col gap-6">
+      
+      <!-- Window & Rain Simulation + Ambient Lighting -->
+      <div class="desk-mat rounded-3xl p-5 relative overflow-hidden flex flex-col justify-between min-h-[170px]">
+        <!-- Raindrop Canvas Overlay -->
+        <canvas id="rainCanvas" class="absolute inset-0 w-full h-full pointer-events-none opacity-45"></canvas>
+        
+        <div class="relative z-10 flex justify-between items-start">
+          <div>
+            <span class="text-[11px] uppercase tracking-widest text-amber-200/70 font-semibold">Outside the window</span>
+            <h3 class="text-lg font-serif-cozy italic text-[#f7ede2] mt-0.5" id="weatherSubtitle">Gentle afternoon drizzle</h3>
+          </div>
+          <span class="px-2.5 py-1 rounded-full text-[11px] bg-black/40 border border-white/5 text-[#c5b5a7] backdrop-blur-sm">
+            18°C // Overcast
+          </span>
+        </div>
+
+        <div class="relative z-10 mt-6 flex items-center justify-between text-xs text-[#c5b5a7]">
+          <span class="italic">"The soothing cadence of drops against glass."</span>
+          <button id="quickRainToggle" class="px-2.5 py-1 rounded-lg bg-white/5 hover:bg-white/10 text-[11px] transition text-amber-200">
+            Unmute Rain
+          </button>
+        </div>
+      </div>
+
+      <!-- Ceramic Coffee Mug Pomodoro Timer -->
+      <div class="desk-mat rounded-3xl p-6 relative overflow-hidden flex flex-col items-center text-center">
+        <!-- Subtle warm radial glow behind mug -->
+        <div class="absolute inset-0 bg-radial from-amber-600/10 via-transparent to-transparent pointer-events-none"></div>
+
+        <!-- Mode Selectors: Work / Short Break / Long Break -->
+        <div class="flex items-center gap-1.5 p-1 rounded-full bg-black/40 border border-white/5 mb-6 text-xs relative z-10">
+          <button data-mode="work" class="pomo-mode-btn active px-3.5 py-1.5 rounded-full font-medium transition-all text-[#f7ede2] bg-white/10 shadow-sm">
+            Deep Focus
+          </button>
+          <button data-mode="short" class="pomo-mode-btn px-3.5 py-1.5 rounded-full font-medium transition-all text-[#c5b5a7] hover:text-[#f7ede2]">
+            Short Sip (5m)
+          </button>
+          <button data-mode="long" class="pomo-mode-btn px-3.5 py-1.5 rounded-full font-medium transition-all text-[#c5b5a7] hover:text-[#f7ede2]">
+            Rest & Refill (15m)
+          </button>
+        </div>
+
+        <!-- Interactive Coffee Cup Visual Illustration with Steam -->
+        <div class="relative my-2 flex flex-col items-center justify-center cursor-pointer group" id="cupWrapper" title="Click cup to Start / Pause timer">
+          
+          <!-- Steaming Particles (CSS Animation) -->
+          <div id="steamContainer" class="flex gap-2.5 items-end h-12 mb-1 opacity-90 transition-opacity duration-700">
+            <span class="w-1.5 h-7 rounded-full bg-amber-100/40 steam-line-1 blur-[1px]"></span>
+            <span class="w-2 h-9 rounded-full bg-amber-100/50 steam-line-2 blur-[1.2px]"></span>
+            <span class="w-1.5 h-6 rounded-full bg-amber-100/35 steam-line-3 blur-[1px]"></span>
+          </div>
+
+          <!-- Ceramic Mug Illustration with liquid fill indicator -->
+          <div class="relative w-36 h-32">
+            <!-- Cup Body -->
+            <div class="w-32 h-28 mx-auto rounded-b-[40px] rounded-t-lg bg-gradient-to-b from-[#e5d4c0] to-[#bda691] border-4 border-[#8e7a68] shadow-2xl relative overflow-hidden flex items-end">
+              <!-- Internal Coffee Level Fill (Shrinks as timer advances) -->
+              <div id="coffeeFill" class="w-full bg-gradient-to-t from-[#2a170d] to-[#4a2e1d] transition-all duration-1000 relative" style="height: 82%;">
+                <!-- Coffee foam ripple -->
+                <div class="absolute top-0 inset-x-0 h-2 bg-[#704d35]/60 border-t border-[#9b6f4e]/40 rounded-full"></div>
+              </div>
+              
+              <!-- Ceramic glare sheen -->
+              <div class="absolute top-0 right-3 w-3 h-20 bg-white/20 rounded-full blur-[1.5px] pointer-events-none"></div>
+            </div>
+
+            <!-- Mug Handle -->
+            <div class="absolute top-3 right-0 w-8 h-16 rounded-r-2xl border-4 border-[#8e7a68] border-l-0 shadow-md"></div>
+            
+            <!-- Saucer Plate -->
+            <div class="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-36 h-4 bg-gradient-to-r from-[#9e8876] via-[#dcd0bf] to-[#9e8876] rounded-full border border-black/30 shadow-lg"></div>
+          </div>
+
+          <!-- Quick click affordance tooltip -->
+          <div class="text-[11px] text-[#c5b5a7] opacity-60 mt-3 group-hover:opacity-100 transition">
+            <span id="cupActionLabel">Tap mug to begin brewing focus</span>
+          </div>
+        </div>
+
+        <!-- Timer Digital Readout -->
+        <div class="my-3">
+          <div id="timerDisplay" class="text-5xl sm:text-6xl font-serif-cozy font-bold tracking-tight text-[#f7ede2]">
+            25:00
+          </div>
+          <div id="pomoPhaseText" class="text-xs uppercase tracking-widest text-[var(--accent-warm)] font-semibold mt-1">
+            Ready to concentrate
+          </div>
+        </div>
+
+        <!-- Controls: Start / Pause / Reset & Time Tweaks -->
+        <div class="flex items-center gap-3 mt-4">
+          <button id="btnPomoToggle" class="px-7 py-2.5 rounded-full bg-[var(--accent-warm)] hover:brightness-110 text-stone-900 font-bold text-sm shadow-lg transition active:scale-95 flex items-center gap-2">
+            <svg id="playIcon" class="w-4 h-4 fill-current" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span id="pomoBtnLabel">Start Brewing</span>
+          </button>
+          
+          <button id="btnPomoReset" class="p-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-[#c5b5a7] hover:text-[#f7ede2] transition active:scale-95" title="Reset Session">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+          </button>
+        </div>
+
+        <!-- Completed Cups Tally -->
+        <div class="mt-6 pt-4 border-t border-white/5 w-full flex items-center justify-between text-xs text-[#c5b5a7]">
+          <span>Sessions completed today:</span>
+          <div id="cupsTally" class="flex gap-1.5 text-amber-300">
+            <!-- Dynamically populated cups -->
+            <span class="text-base">☕</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MIDDLE / RIGHT COLUMN: Ambient Soundboard & Mood Journal [7 COLS] -->
+    <section class="lg:col-span-7 flex flex-col gap-6">
+
+      <!-- Generative Ambient Soundboard (Web Audio API) -->
+      <div class="desk-mat rounded-3xl p-6 relative">
+        <div class="flex items-center justify-between mb-4 border-b border-white/5 pb-3">
+          <div>
+            <h2 class="text-lg font-serif-cozy font-bold text-[#f7ede2] flex items-center gap-2">
+              Café Soundboard
+              <span class="text-[10px] font-sans font-medium px-2 py-0.5 rounded-full bg-amber-400/10 text-amber-300 border border-amber-400/20">Synthesized Live</span>
+            </h2>
+            <p class="text-xs text-[#c5b5a7]">Adjust individual dials to curate your perfect ambient workspace.</p>
+          </div>
+          <button id="btnMuteAll" class="text-xs text-[#c5b5a7] hover:text-white px-2.5 py-1 rounded-lg bg-white/5 border border-white/5 transition">
+            Mute All
+          </button>
+        </div>
+
+        <!-- Sound Sliders Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" id="soundChannelsContainer">
+          
+          <!-- Channel 1: Soft Rainy Window -->
+          <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 flex flex-col gap-2 sound-channel" data-sound="rain">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold flex items-center gap-2">
+                <span class="text-base">🌧️</span> Rainy Window
+              </span>
+              <button class="toggle-btn text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/5 text-stone-400 border border-white/5 hover:text-white transition">OFF</button>
+            </div>
+            <div class="flex items-center gap-3">
+              <input type="range" min="0" max="1" step="0.01" value="0.4" class="sound-slider flex-1" aria-label="Rain volume">
+              <span class="vol-label text-[10px] font-mono text-stone-400 w-7 text-right">40%</span>
+            </div>
+          </div>
+
+          <!-- Channel 2: Warm Vinyl Crackle -->
+          <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 flex flex-col gap-2 sound-channel" data-sound="vinyl">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold flex items-center gap-2">
+                <span class="text-base">📻</span> Lo-Fi Vinyl Crackle
+              </span>
+              <button class="toggle-btn text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/5 text-stone-400 border border-white/5 hover:text-white transition">OFF</button>
+            </div>
+            <div class="flex items-center gap-3">
+              <input type="range" min="0" max="1" step="0.01" value="0.25" class="sound-slider flex-1" aria-label="Vinyl volume">
+              <span class="vol-label text-[10px] font-mono text-stone-400 w-7 text-right">25%</span>
+            </div>
+          </div>
+
+          <!-- Channel 3: Distant Café Murmur -->
+          <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 flex flex-col gap-2 sound-channel" data-sound="chatter">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold flex items-center gap-2">
+                <span class="text-base">☕</span> Distant Chatter
+              </span>
+              <button class="toggle-btn text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/5 text-stone-400 border border-white/5 hover:text-white transition">OFF</button>
+            </div>
+            <div class="flex items-center gap-3">
+              <input type="range" min="0" max="1" step="0.01" value="0.3" class="sound-slider flex-1" aria-label="Chatter volume">
+              <span class="vol-label text-[10px] font-mono text-stone-400 w-7 text-right">30%</span>
+            </div>
+          </div>
+
+          <!-- Channel 4: Vintage Clock Ticks -->
+          <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 flex flex-col gap-2 sound-channel" data-sound="clock">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold flex items-center gap-2">
+                <span class="text-base">🕰️</span> Vintage Clock Tick
+              </span>
+              <button class="toggle-btn text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/5 text-stone-400 border border-white/5 hover:text-white transition">OFF</button>
+            </div>
+            <div class="flex items-center gap-3">
+              <input type="range" min="0" max="1" step="0.01" value="0.2" class="sound-slider flex-1" aria-label="Clock volume">
+              <span class="vol-label text-[10px] font-mono text-stone-400 w-7 text-right">20%</span>
+            </div>
+          </div>
+
+          <!-- Channel 5: Warm Brown Noise / Cozy Wind (Spans full width on sm) -->
+          <div class="p-3.5 rounded-2xl bg-black/25 border border-white/5 flex flex-col gap-2 sound-channel sm:col-span-2" data-sound="wind">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold flex items-center gap-2">
+                <span class="text-base">🍃</span> Gentle Brown Noise & Breeze
+              </span>
+              <button class="toggle-btn text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/5 text-stone-400 border border-white/5 hover:text-white transition">OFF</button>
+            </div>
+            <div class="flex items-center gap-3">
+              <input type="range" min="0" max="1" step="0.01" value="0.35" class="sound-slider flex-1" aria-label="Wind volume">
+              <span class="vol-label text-[10px] font-mono text-stone-400 w-7 text-right">35%</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Mood & Reflection Journal with Local Persistence -->
+      <div class="desk-mat rounded-3xl p-6 relative flex flex-col gap-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/5 pb-3">
+          <div>
+            <h2 class="text-lg font-serif-cozy font-bold text-[#f7ede2]">Desk Journal & Mindful Reflections</h2>
+            <p class="text-xs text-[#c5b5a7]">Select your present vibe to shift the sanctuary color palette.</p>
+          </div>
+          
+          <!-- Mood Selection Gradient Chips -->
+          <div class="flex items-center gap-1.5 flex-wrap" id="moodChipContainer">
+            <button data-mood="honey" class="mood-btn active px-2.5 py-1 rounded-full text-xs font-medium border border-amber-400/40 bg-amber-500/20 text-amber-200 transition">
+              🍯 Honey
+            </button>
+            <button data-mood="slate" class="mood-btn px-2.5 py-1 rounded-full text-xs font-medium border border-teal-400/20 bg-teal-900/20 text-teal-200 transition">
+              🌧️ Slate
+            </button>
+            <button data-mood="mocha" class="mood-btn px-2.5 py-1 rounded-full text-xs font-medium border border-orange-400/20 bg-orange-950/20 text-orange-200 transition">
+              ☕ Mocha
+            </button>
+            <button data-mood="moss" class="mood-btn px-2.5 py-1 rounded-full text-xs font-medium border border-emerald-400/20 bg-emerald-950/20 text-emerald-200 transition">
+              🌿 Moss
+            </button>
+            <button data-mood="lavender" class="mood-btn px-2.5 py-1 rounded-full text-xs font-medium border border-rose-400/20 bg-rose-950/20 text-rose-200 transition">
+              🌙 Dusk
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Activity Tag Chips -->
+        <div class="flex items-center gap-1.5 flex-wrap text-xs text-[#c5b5a7]">
+          <span class="text-[11px] opacity-70">Focus Tag:</span>
+          <button class="tag-chip px-2.5 py-0.5 rounded-md bg-white/5 hover:bg-white/10 border border-white/5 text-[11px] active">#DeepWork</button>
+          <button class="tag-chip px-2.5 py-0.5 rounded-md bg-white/5 hover:bg-white/10 border border-white/5 text-[11px]">#Reading</button>
+          <button class="tag-chip px-2.5 py-0.5 rounded-md bg-white/5 hover:bg-white/10 border border-white/5 text-[11px]">#CreativeCoding</button>
+          <button class="tag-chip px-2.5 py-0.5 rounded-md bg-white/5 hover:bg-white/10 border border-white/5 text-[11px]">#MindfulPause</button>
+        </div>
+
+        <!-- Journal Textarea -->
+        <div class="relative">
+          <textarea id="journalInput" rows="3" placeholder="What thought or task is occupying your desk right now? (Press Save or Cmd+Enter to pin)" class="w-full rounded-2xl bg-black/30 border border-white/10 p-3.5 text-sm text-[#f7ede2] placeholder-[#c5b5a7]/40 focus:outline-none focus:border-[var(--accent-warm)] transition resize-none"></textarea>
+          
+          <div class="flex items-center justify-between mt-2">
+            <span class="text-[11px] text-[#c5b5a7] italic" id="wordCount">0 words written</span>
+            <button id="btnSaveJournal" class="px-4 py-1.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-xs font-semibold text-[#f7ede2] transition active:scale-95 flex items-center gap-1.5">
+              <span>Pin Thought</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Historical Notes / Reflections Stream -->
+        <div class="mt-2 border-t border-white/5 pt-3">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-[11px] uppercase tracking-wider text-[#c5b5a7] font-semibold">Today's Notes & Snippets</span>
+            <button id="btnClearEntries" class="text-[10px] text-stone-500 hover:text-stone-300 transition">Clear Log</button>
+          </div>
+          
+          <div id="journalEntriesList" class="flex flex-col gap-2.5 max-h-48 overflow-y-auto pr-1">
+            <!-- Dynamic entries load here -->
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Ambient Footer Quotes & Status -->
+  <footer class="w-full max-w-7xl mx-auto pt-4 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#c5b5a7]/60 relative z-10">
+    <div class="italic font-serif-cozy" id="deskQuote">
+      "There is peace in the aroma of fresh roast and steady focus."
+    </div>
+    <div class="flex items-center gap-4">
+      <span>Sound Engine: WebAudio Synthesizer</span>
+      <span>•</span>
+      <span class="text-amber-200/80">Cozy Corner // 2026</span>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       AUDIO & LOGIC JAVASCRIPT
+       ========================================================================= -->
+  <script>
+    /* =========================================================================
+       1. GENERATIVE PROCEDURAL SOUND ENGINE (Zero MP3s, Pure Web Audio API)
+       ========================================================================= */
+    class CozyAudioEngine {
+      constructor() {
+        this.ctx = null;
+        this.isInitialized = false;
+        this.masterGain = null;
+        this.channels = {
+          rain: { gainNode: null, active: false, volume: 0.4, nodes: [] },
+          vinyl: { gainNode: null, active: false, volume: 0.25, nodes: [] },
+          chatter: { gainNode: null, active: false, volume: 0.3, nodes: [] },
+          clock: { gainNode: null, active: false, volume: 0.2, timerId: null },
+          wind: { gainNode: null, active: false, volume: 0.35, nodes: [] }
+        };
+      }
+
+      initContext() {
+        if (this.isInitialized) return;
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        this.ctx = new AudioCtx();
+        this.masterGain = this.ctx.createGain();
+        this.masterGain.gain.setValueAtTime(1.0, this.ctx.currentTime);
+        this.masterGain.connect(this.ctx.destination);
+        this.isInitialized = true;
+      }
+
+      ensureActive() {
+        this.initContext();
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+
+      // Helper to generate pink/white noise buffers
+      createNoiseBuffer(type = 'white') {
+        const bufferSize = 2 * this.ctx.sampleRate;
+        const buffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+        const output = buffer.getChannelData(0);
+
+        if (type === 'white') {
+          for (let i = 0; i < bufferSize; i++) {
+            output[i] = Math.random() * 2 - 1;
+          }
+        } else if (type === 'pink') {
+          let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+          for (let i = 0; i < bufferSize; i++) {
+            const white = Math.random() * 2 - 1;
+            b0 = 0.99886 * b0 + white * 0.0555179;
+            b1 = 0.99332 * b1 + white * 0.0750759;
+            b2 = 0.96900 * b2 + white * 0.1538520;
+            b3 = 0.86650 * b3 + white * 0.3104856;
+            b4 = 0.55000 * b4 + white * 0.5329522;
+            b5 = -0.7616 * b5 - white * 0.0168980;
+            output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362;
+            output[i] *= 0.11;
+            b6 = white * 0.115926;
+          }
+        }
+        return buffer;
+      }
+
+      // Channel 1: Rainy Window Synthesizer
+      startRain() {
+        const ch = this.channels.rain;
+        const now = this.ctx.currentTime;
+        ch.gainNode = this.ctx.createGain();
+        ch.gainNode.gain.setValueAtTime(ch.volume, now);
+
+        const noiseNode = this.ctx.createBufferSource();
+        noiseNode.buffer = this.createNoiseBuffer('pink');
+        noiseNode.loop = true;
+
+        // Bandpass to simulate rain hitting pane
+        const filter = this.ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.setValueAtTime(1000, now);
+
+        // Highpass to eliminate harsh sub-booms
+        const hpFilter = this.ctx.createBiquadFilter();
+        hpFilter.type = 'highpass';
+        hpFilter.frequency.setValueAtTime(200, now);
+
+        noiseNode.connect(filter);
+        filter.connect(hpFilter);
+        hpFilter.connect(ch.gainNode);
+        ch.gainNode.connect(this.masterGain);
+
+        noiseNode.start();
+        ch.nodes = [noiseNode, filter, hpFilter];
+        ch.active = true;
+      }
+
+      // Channel 2: Vinyl Crackle Synthesizer
+      startVinyl() {
+        const ch = this.channels.vinyl;
+        const now = this.ctx.currentTime;
+        ch.gainNode = this.ctx.createGain();
+        ch.gainNode.gain.setValueAtTime(ch.volume, now);
+
+        // Highpass pink noise for steady gentle hiss
+        const hissNode = this.ctx.createBufferSource();
+        hissNode.buffer = this.createNoiseBuffer('pink');
+        hissNode.loop = true;
+
+        const hissFilter = this.ctx.createBiquadFilter();
+        hissFilter.type = 'highpass';
+        hissFilter.frequency.setValueAtTime(2800, now);
+
+        const hissGain = this.ctx.createGain();
+        hissGain.gain.setValueAtTime(0.08, now);
+
+        hissNode.connect(hissFilter);
+        hissFilter.connect(hissGain);
+        hissGain.connect(ch.gainNode);
+        hissNode.start();
+
+        // Irregular vinyl pops via random impulses
+        const popInterval = setInterval(() => {
+          if (!ch.active) { clearInterval(popInterval); return; }
+          if (Math.random() > 0.45) {
+            const popOsc = this.ctx.createOscillator();
+            const popGain = this.ctx.createGain();
+            const t = this.ctx.currentTime;
+            popOsc.type = 'square';
+            popOsc.frequency.setValueAtTime(800 + Math.random() * 2000, t);
+            popGain.gain.setValueAtTime(0.03 * Math.random(), t);
+            popGain.gain.exponentialRampToValueAtTime(0.0001, t + 0.015);
+            popOsc.connect(popGain);
+            popGain.connect(ch.gainNode);
+            popOsc.start(t);
+            popOsc.stop(t + 0.02);
+          }
+        }, 80);
+
+        ch.gainNode.connect(this.masterGain);
+        ch.nodes = [hissNode, hissFilter, hissGain];
+        ch.timerId = popInterval;
+        ch.active = true;
+      }
+
+      // Channel 3: Distant Café Chatter Synthesizer
+      startChatter() {
+        const ch = this.channels.chatter;
+        const now = this.ctx.currentTime;
+        ch.gainNode = this.ctx.createGain();
+        ch.gainNode.gain.setValueAtTime(ch.volume, now);
+
+        // Filtered pink noise with resonant formants resembling murmuring vowels
+        const noiseNode = this.ctx.createBufferSource();
+        noiseNode.buffer = this.createNoiseBuffer('pink');
+        noiseNode.loop = true;
+
+        const band1 = this.ctx.createBiquadFilter();
+        band1.type = 'bandpass';
+        band1.frequency.setValueAtTime(500, now);
+        band1.Q.setValueAtTime(4.0, now);
+
+        const band2 = this.ctx.createBiquadFilter();
+        band2.type = 'bandpass';
+        band2.frequency.setValueAtTime(1200, now);
+        band2.Q.setValueAtTime(3.5, now);
+
+        // LFOs gently shifting formant centers (voices drifting in conversation)
+        const lfo = this.ctx.createOscillator();
+        lfo.type = 'sine';
+        lfo.frequency.setValueAtTime(0.3, now);
+        const lfoGain = this.ctx.createGain();
+        lfoGain.gain.setValueAtTime(150, now);
+        lfo.connect(band1.frequency);
+
+        noiseNode.connect(band1);
+        noiseNode.connect(band2);
+        band1.connect(ch.gainNode);
+        band2.connect(ch.gainNode);
+        ch.gainNode.connect(this.masterGain);
+
+        noiseNode.start();
+        lfo.start();
+        ch.nodes = [noiseNode, band1, band2, lfo, lfoGain];
+        ch.active = true;
+      }
+
+      // Channel 4: Soft Clock Tick Synthesizer
+      startClock() {
+        const ch = this.channels.clock;
+        const now = this.ctx.currentTime;
+        ch.gainNode = this.ctx.createGain();
+        ch.gainNode.gain.setValueAtTime(ch.volume, now);
+        ch.gainNode.connect(this.masterGain);
+
+        let tickToggle = false;
+        const interval = setInterval(() => {
+          if (!ch.active) { clearInterval(interval); return; }
+          const t = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+
+          osc.type = 'triangle';
+          // Alternate subtle "tick" & "tock" frequencies
+          osc.frequency.setValueAtTime(tickToggle ? 920 : 780, t);
+          tickToggle = !tickToggle;
+
+          g.gain.setValueAtTime(0.04, t);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + 0.04);
+
+          osc.connect(g);
+          g.connect(ch.gainNode);
+          osc.start(t);
+          osc.stop(t + 0.05);
+        }, 1000);
+
+        ch.timerId = interval;
+        ch.active = true;
+      }
+
+      // Channel 5: Warm Brown Noise & Soft Wind
+      startWind() {
+        const ch = this.channels.wind;
+        const now = this.ctx.currentTime;
+        ch.gainNode = this.ctx.createGain();
+        ch.gainNode.gain.setValueAtTime(ch.volume, now);
+
+        const noiseNode = this.ctx.createBufferSource();
+        noiseNode.buffer = this.createNoiseBuffer('pink');
+        noiseNode.loop = true;
+
+        const lowpass = this.ctx.createBiquadFilter();
+        lowpass.type = 'lowpass';
+        lowpass.frequency.setValueAtTime(320, now);
+
+        // Wind swell LFO
+        const swellLfo = this.ctx.createOscillator();
+        swellLfo.type = 'sine';
+        swellLfo.frequency.setValueAtTime(0.08, now);
+        const swellGain = this.ctx.createGain();
+        swellGain.gain.setValueAtTime(140, now);
+        swellLfo.connect(lowpass.frequency);
+
+        noiseNode.connect(lowpass);
+        lowpass.connect(ch.gainNode);
+        ch.gainNode.connect(this.masterGain);
+
+        noiseNode.start();
+        swellLfo.start();
+        ch.nodes = [noiseNode, lowpass, swellLfo, swellGain];
+        ch.active = true;
+      }
+
+      stopChannel(name) {
+        const ch = this.channels[name];
+        if (!ch || !ch.active) return;
+
+        if (ch.nodes && ch.nodes.length) {
+          ch.nodes.forEach(n => {
+            try {
+              if (n.stop) n.stop();
+              if (n.disconnect) n.disconnect();
+            } catch(e) {}
+          });
+          ch.nodes = [];
+        }
+
+        if (ch.timerId) {
+          clearInterval(ch.timerId);
+          ch.timerId = null;
+        }
+
+        if (ch.gainNode) {
+          try { ch.gainNode.disconnect(); } catch(e) {}
+          ch.gainNode = null;
+        }
+        ch.active = false;
+      }
+
+      setChannelVolume(name, val) {
+        const ch = this.channels[name];
+        if (!ch) return;
+        ch.volume = parseFloat(val);
+        if (ch.gainNode && this.ctx) {
+          ch.gainNode.gain.setTargetAtTime(ch.volume, this.ctx.currentTime, 0.05);
+        }
+      }
+
+      // Play soft ceramic mug ding when pomodoro ends
+      playCeramicBell() {
+        this.ensureActive();
+        const now = this.ctx.currentTime;
+        const osc = this.ctx.createOscillator();
+        const oscHarmonic = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(659.25, now); // E5
+
+        oscHarmonic.type = 'sine';
+        oscHarmonic.frequency.setValueAtTime(1318.5, now); // E6
+
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.8);
+
+        osc.connect(gain);
+        oscHarmonic.connect(gain);
+        gain.connect(this.masterGain);
+
+        osc.start(now);
+        oscHarmonic.start(now);
+        osc.stop(now + 1.8);
+        oscHarmonic.stop(now + 1.8);
+      }
+    }
+
+    const audio = new CozyAudioEngine();
+
+    /* =========================================================================
+       2. POMODORO COFFEE CUP CONTROLLER
+       ========================================================================= */
+    const POMO_CONFIGS = {
+      work: { label: 'Deep Focus', minutes: 25, phaseMsg: 'Focusing on one noble task' },
+      short: { label: 'Short Sip', minutes: 5, phaseMsg: 'Breathe and stretch gently' },
+      long: { label: 'Refill Rest', minutes: 15, phaseMsg: 'Full tea refill & quiet pause' }
+    };
+
+    let currentMode = 'work';
+    let totalSeconds = POMO_CONFIGS[currentMode].minutes * 60;
+    let remainingSeconds = totalSeconds;
+    let timerInterval = null;
+    let isRunning = false;
+    let completedSessions = 0;
+
+    const timerDisplay = document.getElementById('timerDisplay');
+    const pomoPhaseText = document.getElementById('pomoPhaseText');
+    const coffeeFill = document.getElementById('coffeeFill');
+    const btnPomoToggle = document.getElementById('btnPomoToggle');
+    const btnPomoReset = document.getElementById('btnPomoReset');
+    const pomoBtnLabel = document.getElementById('pomoBtnLabel');
+    const cupWrapper = document.getElementById('cupWrapper');
+    const cupActionLabel = document.getElementById('cupActionLabel');
+    const steamContainer = document.getElementById('steamContainer');
+    const cupsTally = document.getElementById('cupsTally');
+
+    function formatTime(secs) {
+      const m = Math.floor(secs / 60).toString().padStart(2, '0');
+      const s = (secs % 60).toString().padStart(2, '0');
+      return `${m}:${s}`;
+    }
+
+    function updatePomoUI() {
+      timerDisplay.textContent = formatTime(remainingSeconds);
+      
+      // Update Coffee Fill height percentage (Depletes as you work, or refills on break)
+      const fractionRemaining = remainingSeconds / totalSeconds;
+      const fillHeightPercent = Math.max(12, Math.round(fractionRemaining * 85));
+      coffeeFill.style.height = `${fillHeightPercent}%`;
+
+      // Update Steam Intensity
+      if (isRunning) {
+        steamContainer.style.opacity = '1';
+        steamContainer.style.filter = 'drop-shadow(0 0 6px rgba(255, 230, 200, 0.4))';
+      } else {
+        steamContainer.style.opacity = '0.35';
+        steamContainer.style.filter = 'none';
+      }
+    }
+
+    function startTimer() {
+      audio.ensureActive();
+      isRunning = true;
+      pomoBtnLabel.textContent = 'Pause Focus';
+      cupActionLabel.textContent = 'Coffee is brewing. Stay in the zone.';
+      pomoPhaseText.textContent = POMO_CONFIGS[currentMode].phaseMsg;
+
+      timerInterval = setInterval(() => {
+        if (remainingSeconds > 0) {
+          remainingSeconds--;
+          updatePomoUI();
+        } else {
+          // Timer finished
+          clearInterval(timerInterval);
+          isRunning = false;
+          audio.playCeramicBell();
+
+          if (currentMode === 'work') {
+            completedSessions++;
+            renderCupsTally();
+            pomoPhaseText.textContent = 'Session complete! Time for a warm sip.';
+            switchMode('short');
+          } else {
+            pomoPhaseText.textContent = 'Break finished. Ready for the desk?';
+            switchMode('work');
+          }
+          pomoBtnLabel.textContent = 'Start Brewing';
+          cupActionLabel.textContent = 'Tap mug to begin your next session';
+        }
+      }, 1000);
+      updatePomoUI();
+    }
+
+    function pauseTimer() {
+      isRunning = false;
+      clearInterval(timerInterval);
+      pomoBtnLabel.textContent = 'Resume Focus';
+      cupActionLabel.textContent = 'Paused. Tap to continue sipping focus.';
+      updatePomoUI();
+    }
+
+    function toggleTimer() {
+      if (isRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    }
+
+    function resetTimer() {
+      pauseTimer();
+      remainingSeconds = totalSeconds;
+      pomoBtnLabel.textContent = 'Start Brewing';
+      cupActionLabel.textContent = 'Tap mug to begin brewing focus';
+      pomoPhaseText.textContent = 'Ready to concentrate';
+      updatePomoUI();
+    }
+
+    function switchMode(mode) {
+      if (!POMO_CONFIGS[mode]) return;
+      currentMode = mode;
+      totalSeconds = POMO_CONFIGS[mode].minutes * 60;
+      remainingSeconds = totalSeconds;
+
+      document.querySelectorAll('.pomo-mode-btn').forEach(btn => {
+        if (btn.dataset.mode === mode) {
+          btn.classList.add('bg-white/10', 'text-[#f7ede2]', 'shadow-sm');
+          btn.classList.remove('text-[#c5b5a7]');
+        } else {
+          btn.classList.remove('bg-white/10', 'text-[#f7ede2]', 'shadow-sm');
+          btn.classList.add('text-[#c5b5a7]');
+        }
+      });
+
+      resetTimer();
+    }
+
+    function renderCupsTally() {
+      cupsTally.innerHTML = '';
+      if (completedSessions === 0) {
+        cupsTally.innerHTML = '<span class="text-xs opacity-50 italic">None yet</span>';
+        return;
+      }
+      for (let i = 0; i < completedSessions; i++) {
+        const span = document.createElement('span');
+        span.textContent = '☕';
+        span.className = 'text-base animate-bounce';
+        cupsTally.appendChild(span);
+      }
+    }
+
+    btnPomoToggle.addEventListener('click', toggleTimer);
+    cupWrapper.addEventListener('click', toggleTimer);
+    btnPomoReset.addEventListener('click', resetTimer);
+
+    document.querySelectorAll('.pomo-mode-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        switchMode(e.target.dataset.mode);
+      });
+    });
+
+    /* =========================================================================
+       3. AMBIENT SOUNDBOARD UI CONTROLS
+       ========================================================================= */
+    const soundChannels = document.querySelectorAll('.sound-channel');
+    const audioMasterBtn = document.getElementById('btnAudioMaster');
+    const audioStatusDot = document.getElementById('audioStatusDot');
+    const audioMasterLabel = document.getElementById('audioMasterLabel');
+    const btnMuteAll = document.getElementById('btnMuteAll');
+    const quickRainToggle = document.getElementById('quickRainToggle');
+
+    function updateAudioMasterIndicator() {
+      const anyActive = Object.values(audio.channels).some(ch => ch.active);
+      if (anyActive) {
+        audioStatusDot.className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
+        audioMasterLabel.textContent = 'Soundboard: Playing';
+      } else {
+        audioStatusDot.className = 'w-2 h-2 rounded-full bg-stone-500';
+        audioMasterLabel.textContent = 'Soundboard: Sleeping';
+      }
+    }
+
+    soundChannels.forEach(channelEl => {
+      const soundKey = channelEl.dataset.sound;
+      const toggleBtn = channelEl.querySelector('.toggle-btn');
+      const slider = channelEl.querySelector('.sound-slider');
+      const volLabel = channelEl.querySelector('.vol-label');
+
+      toggleBtn.addEventListener('click', () => {
+        audio.ensureActive();
+        const ch = audio.channels[soundKey];
+
+        if (ch.active) {
+          audio.stopChannel(soundKey);
+          toggleBtn.textContent = 'OFF';
+          toggleBtn.className = 'toggle-btn text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/5 text-stone-400 border border-white/5 hover:text-white transition';
+        } else {
+          if (soundKey === 'rain') audio.startRain();
+          if (soundKey === 'vinyl') audio.startVinyl();
+          if (soundKey === 'chatter') audio.startChatter();
+          if (soundKey === 'clock') audio.startClock();
+          if (soundKey === 'wind') audio.startWind();
+
+          toggleBtn.textContent = 'ON';
+          toggleBtn.className = 'toggle-btn text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-amber-400/20 text-amber-200 border border-amber-400/30 transition';
+        }
+        updateAudioMasterIndicator();
+      });
+
+      slider.addEventListener('input', (e) => {
+        const val = e.target.value;
+        volLabel.textContent = `${Math.round(val * 100)}%`;
+        audio.setChannelVolume(soundKey, val);
+      });
+    });
+
+    btnMuteAll.addEventListener('click', () => {
+      Object.keys(audio.channels).forEach(key => audio.stopChannel(key));
+      soundChannels.forEach(el => {
+        const toggleBtn = el.querySelector('.toggle-btn');
+        toggleBtn.textContent = 'OFF';
+        toggleBtn.className = 'toggle-btn text-[11px] font-medium px-2 py-0.5 rounded-full bg-white/5 text-stone-400 border border-white/5 hover:text-white transition';
+      });
+      updateAudioMasterIndicator();
+    });
+
+    quickRainToggle.addEventListener('click', () => {
+      const rainChannelEl = document.querySelector('.sound-channel[data-sound="rain"]');
+      const toggleBtn = rainChannelEl.querySelector('.toggle-btn');
+      toggleBtn.click();
+      quickRainToggle.textContent = audio.channels.rain.active ? 'Mute Rain' : 'Unmute Rain';
+    });
+
+    audioMasterBtn.addEventListener('click', () => {
+      audio.ensureActive();
+      // If none active, turn on rain & vinyl as default cozy combo
+      const anyActive = Object.values(audio.channels).some(ch => ch.active);
+      if (!anyActive) {
+        const rainBtn = document.querySelector('.sound-channel[data-sound="rain"] .toggle-btn');
+        const vinylBtn = document.querySelector('.sound-channel[data-sound="vinyl"] .toggle-btn');
+        rainBtn.click();
+        vinylBtn.click();
+      } else {
+        btnMuteAll.click();
+      }
+    });
+
+    /* =========================================================================
+       4. MOOD JOURNAL & COLOR GRADIENT CONTROLLER
+       ========================================================================= */
+    const moodBtns = document.querySelectorAll('.mood-btn');
+    const journalInput = document.getElementById('journalInput');
+    const btnSaveJournal = document.getElementById('btnSaveJournal');
+    const journalEntriesList = document.getElementById('journalEntriesList');
+    const wordCount = document.getElementById('wordCount');
+    const btnClearEntries = document.getElementById('btnClearEntries');
+    const tagChips = document.querySelectorAll('.tag-chip');
+
+    let activeTag = '#DeepWork';
+    let currentMood = 'honey';
+
+    // Mood Shifter
+    moodBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        moodBtns.forEach(b => {
+          b.classList.remove('active', 'border-amber-400/40', 'bg-amber-500/20');
+        });
+        btn.classList.add('active');
+        currentMood = btn.dataset.mood;
+        document.body.setAttribute('data-mood', currentMood);
+      });
+    });
+
+    // Tag Selector
+    tagChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        tagChips.forEach(c => c.classList.remove('bg-white/20', 'text-amber-200'));
+        chip.classList.add('bg-white/20', 'text-amber-200');
+        activeTag = chip.textContent;
+      });
+    });
+
+    // Word counter
+    journalInput.addEventListener('input', () => {
+      const words = journalInput.value.trim().split(/\s+/).filter(Boolean).length;
+      wordCount.textContent = `${words} ${words === 1 ? 'word' : 'words'} written`;
+    });
+
+    // Local Storage Journal Handlers
+    function loadJournalEntries() {
+      const raw = localStorage.getItem('cozy_desk_reflections');
+      const entries = raw ? JSON.parse(raw) : [
+        {
+          id: 1,
+          text: "Pouring a warm mug of dark roast. The steady drizzle against the pane makes this quiet session deeply comforting.",
+          tag: "#DeepWork",
+          mood: "honey",
+          time: "Earlier Today"
+        }
+      ];
+      renderJournalEntries(entries);
+    }
+
+    function saveJournalEntry() {
+      const text = journalInput.value.trim();
+      if (!text) return;
+
+      const raw = localStorage.getItem('cozy_desk_reflections');
+      const entries = raw ? JSON.parse(raw) : [];
+
+      const newEntry = {
+        id: Date.now(),
+        text,
+        tag: activeTag,
+        mood: currentMood,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+
+      entries.unshift(newEntry);
+      localStorage.setItem('cozy_desk_reflections', JSON.stringify(entries));
+      journalInput.value = '';
+      wordCount.textContent = '0 words written';
+      renderJournalEntries(entries);
+    }
+
+    function renderJournalEntries(entries) {
+      journalEntriesList.innerHTML = '';
+      if (!entries.length) {
+        journalEntriesList.innerHTML = '<div class="text-xs text-stone-500 italic py-2 text-center">Your journal sits open and waiting...</div>';
+        return;
+      }
+
+      entries.forEach(e => {
+        const item = document.createElement('div');
+        item.className = 'p-3 rounded-xl bg-black/25 border border-white/5 flex flex-col gap-1 text-xs relative group';
+        item.innerHTML = `
+          <div class="flex items-center justify-between text-[10px] text-[#c5b5a7]/70">
+            <span class="font-semibold text-amber-200/90">${e.tag || '#Reflection'}</span>
+            <span>${e.time}</span>
+          </div>
+          <p class="text-[#f7ede2] leading-relaxed whitespace-pre-wrap">${escapeHTML(e.text)}</p>
+        `;
+        journalEntriesList.appendChild(item);
+      });
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>'"]/g, 
+        tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+      );
+    }
+
+    btnSaveJournal.addEventListener('click', saveJournalEntry);
+    journalInput.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+        saveJournalEntry();
+      }
+    });
+
+    btnClearEntries.addEventListener('click', () => {
+      if (confirm('Clear today\'s reflection stream?')) {
+        localStorage.removeItem('cozy_desk_reflections');
+        loadJournalEntries();
+      }
+    });
+
+    /* =========================================================================
+       5. INTERACTIVE DESK LAMP & LIGHT OVERLAY
+       ========================================================================= */
+    const btnLamp = document.getElementById('btnLamp');
+    const lampCone = document.getElementById('lampCone');
+    const lampIcon = document.getElementById('lampIcon');
+    let lampOn = true;
+
+    btnLamp.addEventListener('click', () => {
+      lampOn = !lampOn;
+      if (lampOn) {
+        lampCone.classList.remove('off');
+        lampIcon.classList.remove('text-stone-500');
+        lampIcon.classList.add('text-amber-300');
+      } else {
+        lampCone.classList.add('off');
+        lampIcon.classList.remove('text-amber-300');
+        lampIcon.classList.add('text-stone-500');
+      }
+    });
+
+    /* =========================================================================
+       6. PROCEDURAL RAIN CANVAS ANIMATION
+       ========================================================================= */
+    const canvas = document.getElementById('rainCanvas');
+    const ctx = canvas.getContext('2d');
+    let drops = [];
+
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.offsetWidth;
+      canvas.height = canvas.parentElement.offsetHeight;
+      drops = [];
+      const count = Math.floor(canvas.width / 16);
+      for (let i = 0; i < count; i++) {
+        drops.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          length: Math.random() * 12 + 8,
+          speed: Math.random() * 2 + 3,
+          opacity: Math.random() * 0.4 + 0.15
+        });
+      }
+    }
+
+    function animateRain() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(215, 230, 245, 0.45)';
+      ctx.lineWidth = 1;
+
+      drops.forEach(d => {
+        ctx.beginPath();
+        ctx.moveTo(d.x, d.y);
+        ctx.lineTo(d.x - 1, d.y + d.length);
+        ctx.stroke();
+
+        d.y += d.speed;
+        d.x -= 0.3; // subtle diagonal angle
+
+        if (d.y > canvas.height) {
+          d.y = -d.length;
+          d.x = Math.random() * canvas.width;
+        }
+      });
+
+      requestAnimationFrame(animateRain);
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    /* =========================================================================
+       7. LIVE TIME & AMBIENT QUOTES
+       ========================================================================= */
+    const liveTimeEl = document.getElementById('liveTime');
+    const liveDateEl = document.getElementById('liveDate');
+    const deskQuoteEl = document.getElementById('deskQuote');
+
+    const cozyQuotes = [
+      "\"There is peace in the aroma of fresh roast and steady focus.\"",
+      "\"Rain outside, warm glow within. One thoughtful step at a time.\"",
+      "\"The mind finds clarity in slow, intentional moments.\"",
+      "\"Soft clicks, gentle pages, and an unhurried spirit.\""
+    ];
+
+    function updateLiveClock() {
+      const now = new Date();
+      liveTimeEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      liveDateEl.textContent = now.toLocaleDateString([], { weekday: 'short', month: 'short', day: 'numeric' });
+    }
+
+    setInterval(updateLiveClock, 1000);
+    updateLiveClock();
+
+    // Rotate cozy quotes every 30 seconds
+    let quoteIdx = 0;
+    setInterval(() => {
+      quoteIdx = (quoteIdx + 1) % cozyQuotes.length;
+      deskQuoteEl.textContent = cozyQuotes[quoteIdx];
+    }, 30000);
+
+    /* =========================================================================
+       INITIALIZATION
+       ========================================================================= */
+    window.addEventListener('load', () => {
+      updatePomoUI();
+      renderCupsTally();
+      loadJournalEntries();
+      resizeCanvas();
+      animateRain();
+    });
+  </script>
+</body>
+</html>
